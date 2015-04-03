@@ -1,0 +1,30 @@
+h1, h2 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 18px;
+  color: #787878;
+  font-style: italic;
+}
+
+nav > ul {
+  list-style-type: none;
+  margin-left: 0;
+  margin-bottom: 0.8rem;
+  font-size: 0;
+  text-align: center;
+
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
+}
+
+nav > ul > li {
+  display: inline-block;
+  font-size: 1rem;
+}
+
+nav > ul > li + li:before {
+  content: '•';
+  margin-left: 0.25rem;
+}
