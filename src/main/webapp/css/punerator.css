@@ -28,3 +28,18 @@ nav > ul > li + li:before {
   content: '•';
   margin-left: 0.25rem;
 }
+
+/* Punstream */
+.punstream {
+  list-style-type: none;
+}
+
+.punstream > .pun-voting {
+  list-style-type: none;
+  font-size: 0;
+}
+
+.pun-voting > li {
+  display: inline-block;
+  font-size: 1rem;
+}

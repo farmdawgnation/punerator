@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-  </head>
-  <body data-lift-content-id="main">
-    <div id="main" data-lift="surround?with=default;at=content">
-      <h2>Most recent puns!</h2>
-
-      <ol>
-        <li class="pun">
-          <p class="pun-text">
-            Pun pun pun pun pun pun pun pun pun pun pun pun.
-          </p>
-
-          <ul class="pun-voting">
-            <li>
-              <button class="great-pun">Great pun!</button>
-              <span class="great-pun-count">5</span>
-            </li>
-            <li>
-              <button class="epic-fail">Epic fail</button>
-              <span class="epic-fail-count">10</span>
-            </li>
-          </ul>
-        </li>
-      </ol>
+<div id="main" data-lift="surround?with=default;at=content">
+  <section class="row">
+    <div class="columns small-12">
+      <h3>Latest Puns</h3>
     </div>
-  </body>
-</html>
+
+    <ol class="punstream columns small-12">
+      <li class="pun">
+        <h4 class="pun-title">Pun title!</h4>
+
+        <p class="pun-text">
+          Pun pun pun pun pun pun pun pun pun pun pun pun.
+        </p>
+
+        <ul class="pun-voting">
+          <li>
+            <button class="great-pun tiny">Great pun!</button>
+            <span class="vote-count great-pun-count">5</span>
+          </li>
+          <li>
+            <button class="epic-fail tinysmall">Epic fail</button>
+            <span class="vote-count epic-fail-count">10</span>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+</div>
