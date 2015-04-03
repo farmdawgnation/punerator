@@ -4,11 +4,11 @@
       <h3>Latest Puns</h3>
     </div>
 
-    <ol class="punstream columns small-12">
-      <li class="pun">
-        <h4 class="pun-title">Pun title!</h4>
+    <ol class="punstream columns small-12" data-bind="foreach: puns">
+      <li class="pun" data-bind="attr: {'data-pun-id': id}">
+        <h4 class="pun-title" data-bind="text: title">Pun title!</h4>
 
-        <p class="pun-text">
+        <p class="pun-text" data-bind="text: content">
           Pun pun pun pun pun pun pun pun pun pun pun pun.
         </p>
 
