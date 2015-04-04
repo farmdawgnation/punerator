@@ -1,0 +1,13 @@
+<div id="main" data-lift="surround?with=default;at=content">
+  <section class="row">
+    <div class="columns small-12">
+      <h3>Worst Puns</h3>
+    </div>
+
+    <ol class="punstream columns small-12" data-bind="foreach: puns">
+      <li class="pun" data-bind="attr: {'data-pun-id': id}">
+        <div class="pun-container" data-lift="embed?what=pun-container"></div>
+      </li>
+    </ol>
+  </section>
+</div>
