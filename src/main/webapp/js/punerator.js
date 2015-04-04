@@ -37,12 +37,12 @@
     })
     .on('pun-vote', function(eventData) {
       if (eventData.voteType === 'punny') {
-        punModel.punsById[eventData.punId].punny(
-          punModel.punsById[eventData.punId].punny() + 1
+        punModel.punsById()[eventData.punId].punny(
+          punModel.punsById()[eventData.punId].punny() + 1
         );
       } else if (eventData.voteType === 'tearable'){
-        punModel.punsById[eventData.punId].tearable(
-          punModel.punsById[eventData.punId].tearable() + 1
+        punModel.punsById()[eventData.punId].tearable(
+          punModel.punsById()[eventData.punId].tearable() + 1
         );
       }
     });
