@@ -12,6 +12,8 @@ import org.bson.types._
 case class Pun(
   author: String,
   pun: String,
+  punny: Int = 0,
+  tearable: Int = 0,
   createdAt: Date = new Date(),
   _id: ObjectId = ObjectId.get
 ) extends MongoDocument[Pun] {
