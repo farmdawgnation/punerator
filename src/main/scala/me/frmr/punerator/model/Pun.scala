@@ -12,7 +12,7 @@ import org.bson.types._
 case class Pun(
   author: String,
   pun: String,
-  createdAt: Date,
+  createdAt: Date = new Date(),
   _id: ObjectId = ObjectId.get
 ) extends MongoDocument[Pun] {
   override val meta = Pun
