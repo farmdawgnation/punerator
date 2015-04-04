@@ -19,7 +19,8 @@ scalacOptions ++= Seq("-deprecation", "-unchecked")
 libraryDependencies ++= {
   val liftVersion = "2.6.2"
   Seq(
-    "net.liftweb"       %% "lift-webkit"        % liftVersion        % "compile",
+    "net.liftweb"       %% "lift-webkit"        % liftVersion,
+    "net.liftweb"       %% "lift-mongodb"       % liftVersion,
     "net.liftmodules"   %% "lift-jquery-module_2.6" % "2.8",
     "org.eclipse.jetty" % "jetty-webapp"        % "8.1.7.v20120910"  % "container,test",
     "org.eclipse.jetty" % "jetty-plus"          % "8.1.7.v20120910"  % "container,test", // For Jetty Config
