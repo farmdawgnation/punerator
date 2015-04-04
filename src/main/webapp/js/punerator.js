@@ -1,20 +1,4 @@
 (function($) {
-  var punA = {
-    id: 'aaa',
-    author: 'Antonio',
-    content: 'Pun 1 Pun 1 Pun 1',
-    punny: 0,
-    tearable: 0
-  }
-
-  var punB = {
-    id: 'bbb',
-    author: 'Sid',
-    content: 'Pun 2 Pun 2 Pun 2',
-    punny: 0,
-    tearable: 0
-  }
-
   var punModel = {
     puns: ko.observableArray([]),
     queuedPuns: ko.observableArray([])
@@ -25,7 +9,7 @@
         puns = punModel.puns();
 
     for (var index in puns) {
-      var id = puns[index].id();
+      var id = puns[index]._id();
 
       punsById[id] = puns[index];
     }
@@ -61,8 +45,5 @@
           punModel.punsById[eventData.punId].tearable() + 1
         );
       }
-    })
-    .on('ready', function() {
-      jsevent.event('punstream-loaded', {puns: [punA, punB]});
     });
 })(jQuery);

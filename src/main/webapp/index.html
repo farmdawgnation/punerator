@@ -1,11 +1,11 @@
 <div id="main" data-lift="surround?with=default;at=content">
-  <section class="row">
+  <section class="row" data-lift="comet?type=PunstreamComet">
     <div class="columns small-12">
       <h3>Latest Puns</h3>
     </div>
 
     <ol class="punstream columns small-12" data-bind="foreach: puns">
-      <li class="pun" data-bind="attr: {'data-pun-id': id}">
+      <li class="pun" data-bind="attr: {'data-pun-id': _id}">
         <div class="pun-container" data-lift="embed?what=pun-container"></div>
       </li>
     </ol>

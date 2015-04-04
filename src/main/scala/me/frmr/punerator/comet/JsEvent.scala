@@ -1,4 +1,4 @@
-package me.frmr.punerator.util
+package me.frmr.punerator.comet
 
 import net.liftweb.json._
   import Extraction._
