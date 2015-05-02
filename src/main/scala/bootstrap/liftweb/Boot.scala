@@ -61,6 +61,14 @@ class Boot {
     // Add the CometBroadcastActor as a session watcher
     SessionMaster.sessionWatchers = CometBroadcastActor +: SessionMaster.sessionWatchers
 
+    // A hack to ensure that we find out about new sessions asap.
+    LiftRules.sessionCreator = {
+      case (httpSession, contextPath) =>
+        val newSession = new LiftSession(contextPath, httpSession.sessionId, Full(httpSession))
+        CometBroadcastActor ! NewlyCreatedSession(newSession)
+        newSession
+    }
+
     //Init the jQuery module, see http://liftweb.net/jquery for more information.
     LiftRules.jsArtifacts = JQueryArtifacts
     JQueryModule.InitParam.JQuery=JQueryModule.JQuery191
