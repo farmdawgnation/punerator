@@ -24,7 +24,8 @@ object PunSubmitter {
       "PunstreamComet"
     )
 
-    Alert("Your pun has been created!")
+    Alert("Your pun has been created!") &
+    Reload
   }
 
   def render = {
