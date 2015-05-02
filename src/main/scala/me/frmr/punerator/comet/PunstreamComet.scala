@@ -25,6 +25,7 @@ case class PunVoteCast(pundId: String, voteType: String) extends PunstreamCometM
 class PunstreamComet extends CometActor {
   implicit val formats = DefaultFormats
   private val initialNumberOfPuns = 20
+  private var totalNumberOfPuns = Pun.count(JObject(Nil))
 
   var visiblePuns = Pun.findAll(Nil, ("createdAt" -> -1), Limit(initialNumberOfPuns))
   var newPuns: List[Pun] = Nil
@@ -73,6 +74,7 @@ class PunstreamComet extends CometActor {
 
   override def lowPriority = {
     case NewPunCreated(pun: Pun) =>
+      totalNumberOfPuns = totalNumberOfPuns + 1
       newPuns = pun +: newPuns
       reRender()
 
