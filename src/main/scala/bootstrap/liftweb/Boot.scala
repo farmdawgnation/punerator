@@ -56,6 +56,9 @@ class Boot {
     // Force the request to be UTF-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
 
+    // Add the CometBroadcastActor as a session watcher
+    SessionMaster.sessionWatchers.prepend(CometBroadcastActor)
+
     //Init the jQuery module, see http://liftweb.net/jquery for more information.
     LiftRules.jsArtifacts = JQueryArtifacts
     JQueryModule.InitParam.JQuery=JQueryModule.JQuery191
