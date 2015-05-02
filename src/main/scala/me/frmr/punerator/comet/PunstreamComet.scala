@@ -3,10 +3,12 @@ package comet
 
 import net.liftweb._
   import http._
+    import js.JsCmds._
     import SHtml._
   import comet._
   import actor._
   import json._
+    import Extraction._
   import util._
     import Helpers._
   import mongodb._
@@ -21,18 +23,38 @@ case class PunVotedTearable(id: String) extends SimpleJsEvent("pun-voted-tearabl
 sealed trait PunstreamCometMessage
 case class NewPunCreated(pun: Pun) extends PunstreamCometMessage
 case class PunVoteCast(pundId: String, voteType: String) extends PunstreamCometMessage
+case object DisplayNewPuns extends PunstreamCometMessage
+case object DisplayOlderPuns extends PunstreamCometMessage
 
 class PunstreamComet extends CometActor {
-  implicit val formats = DefaultFormats
-  private val initialNumberOfPuns = 20
+  implicit val formats = Pun.formats
+  private val initialNumberOfPuns = 2
   private var totalNumberOfPuns = Pun.count(JObject(Nil))
 
   var visiblePuns = Pun.findAll(Nil, ("createdAt" -> -1), Limit(initialNumberOfPuns))
   var newPuns: List[Pun] = Nil
 
+  def oldPunCount = {
+    totalNumberOfPuns - (visiblePuns.length + newPuns.length)
+  }
+
+  def thereAreOlderPuns_? = {
+    oldPunCount > 0
+  }
+
   def render = {
     ".new-puns" #> (newPuns.isEmpty ? ClearNodes | PassThru) andThen
+    ".old-puns" #> (thereAreOlderPuns_? ? PassThru | ClearNodes) andThen
     ".new-pun-count *" #> newPuns.length &
+    ".display-new-puns [onclick]" #> onEvent { _ =>
+      this ! DisplayNewPuns
+      Noop
+    } &
+    ".old-pun-count *" #> oldPunCount &
+    ".display-old-puns [onclick]" #> onEvent { _ =>
+      this ! DisplayOlderPuns
+      Noop
+    } &
     ".pun" #> visiblePuns.map { pun =>
       "^ [data-pun-id]" #> pun._id.toString &
       ".pun-author *" #> pun.author &
@@ -73,6 +95,27 @@ class PunstreamComet extends CometActor {
   }
 
   override def lowPriority = {
+    case DisplayNewPuns =>
+      visiblePuns = newPuns ::: visiblePuns
+      newPuns = Nil
+      reRender()
+
+    case DisplayOlderPuns =>
+      // Find the oldest pun then find the next 20 oldest puns.
+      for (oldestPun <- visiblePuns.lastOption) {
+        val olderPuns = Pun.findAll(
+          ("createdAt" -> ("$lt" -> decompose(oldestPun.createdAt))),
+          ("createdAt" -> -1),
+          Limit(initialNumberOfPuns)
+        )
+
+        println("older puns")
+        println(olderPuns)
+
+        visiblePuns = visiblePuns ::: olderPuns
+        reRender()
+      }
+
     case NewPunCreated(pun: Pun) =>
       totalNumberOfPuns = totalNumberOfPuns + 1
       newPuns = pun +: newPuns
