@@ -28,7 +28,7 @@ case object DisplayOlderPuns extends PunstreamCometMessage
 
 class PunstreamComet extends CometActor {
   implicit val formats = Pun.formats
-  private val initialNumberOfPuns = 2
+  private val initialNumberOfPuns = 10
   private var totalNumberOfPuns = Pun.count(JObject(Nil))
 
   var visiblePuns = Pun.findAll(Nil, ("createdAt" -> -1), Limit(initialNumberOfPuns))
