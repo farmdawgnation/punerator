@@ -14,6 +14,8 @@ import com.mongodb._
 import net.liftmodules.JQueryModule
 import net.liftweb.http.js.jquery._
 
+import me.frmr.punerator.actor._
+
 /**
  * A class that's instantiated early and run.  It allows the application
  * to modify lift's environment
@@ -57,7 +59,7 @@ class Boot {
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
 
     // Add the CometBroadcastActor as a session watcher
-    SessionMaster.sessionWatchers.prepend(CometBroadcastActor)
+    SessionMaster.sessionWatchers = CometBroadcastActor +: SessionMaster.sessionWatchers
 
     //Init the jQuery module, see http://liftweb.net/jquery for more information.
     LiftRules.jsArtifacts = JQueryArtifacts

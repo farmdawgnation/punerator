@@ -13,6 +13,7 @@ import net.liftweb._
     import BsonDSL._
 
 import me.frmr.punerator.model._
+import me.frmr.punerator.actor._
 
 case class PunVotedPunny(id: String) extends SimpleJsEvent("pun-voted-punny")
 case class PunVotedTearable(id: String) extends SimpleJsEvent("pun-voted-tearable")
@@ -40,11 +41,19 @@ class PunstreamComet extends CometActor {
       ".tearable-count *" #> pun.tearable &
       ".vote-punny [onclick]" #> onEvent { _ =>
         Pun.update("_id" -> pun._id, "$inc" -> ("punny" -> 1))
-        this ! PunVoteCast(pun._id.toString, "punny")
+
+        CometBroadcastActor ! BroadcastCometMessage(
+          PunVoteCast(pun._id.toString, "punny"),
+          "PunstreamComet"
+        )
       } &
       ".vote-tearable [onclick]" #> onEvent { _ =>
         Pun.update("_id" -> pun._id, "$inc" -> ("tearable" -> 1))
-        PunVotedTearable(pun._id.toString, "tearable")
+
+        CometBroadcastActor ! BroadcastCometMessage(
+          PunVoteCast(pun._id.toString, "tearable"),
+          "PunstreamComet"
+        )
       }
     }
   }
