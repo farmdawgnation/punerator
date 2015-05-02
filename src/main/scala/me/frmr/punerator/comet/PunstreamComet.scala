@@ -23,7 +23,6 @@ case class NewPunCreated(pun: Pun) extends PunstreamCometMessage
 case class PunVoteCast(pundId: String, voteType: String) extends PunstreamCometMessage
 
 class PunstreamComet extends CometActor {
-  override val dontCacheRendering = true
   implicit val formats = DefaultFormats
   private val initialNumberOfPuns = 20
 
