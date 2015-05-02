@@ -57,12 +57,28 @@ class PunstreamComet extends CometActor {
     }
   }
 
+  private def punUpdater(punId: String, voteType: String)(pun: Pun) = {
+    pun match {
+      case matchingPun if matchingPun._id.toString == punId =>
+        if (voteType == "punny") {
+          matchingPun.copy(punny = matchingPun.punny + 1)
+        } else {
+          matchingPun.copy(tearable = matchingPun.tearable + 1)
+        }
+
+      case otherPun =>
+        otherPun
+    }
+  }
+
   override def lowPriority = {
     case NewPunCreated(pun: Pun) =>
       newPuns = pun +: newPuns
       reRender()
 
     case PunVoteCast(punId, voteType) =>
-      //TODO
+      visiblePuns = visiblePuns.map(punUpdater(punId, voteType))
+      newPuns = newPuns.map(punUpdater(punId, voteType))
+      reRender()
   }
 }
