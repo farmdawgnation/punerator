@@ -109,9 +109,6 @@ class PunstreamComet extends CometActor {
           Limit(initialNumberOfPuns)
         )
 
-        println("older puns")
-        println(olderPuns)
-
         visiblePuns = visiblePuns ::: olderPuns
         reRender()
       }
